@@ -60,6 +60,7 @@
     var requestOp = request.data;
 debug(JSON.stringify(evt.data));
     function observerTemplate(evt) {
+      debug('OBSERVER FIRED!');
       channel.postMessage({
         remotePortId: remotePortId,
         data: {
