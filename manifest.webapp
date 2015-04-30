@@ -1,0 +1,26 @@
+{
+  "version": "0.1.0",
+  "name": "Settings - SW - SHIM - SERVER",
+  "description": "Service worker - shim testing",
+  "type": "certified",
+  "launch_path": "/settings-sw/index.html",
+  "icons": {
+    "16": "/settings-sw/style/icons/icon.png",
+    "48": "/settings-sw/style/icons/icon.png",
+    "60": "/settings-sw/style/icons/icon.png",
+    "128": "/settings-sw/style/icons/icon.png"
+  },
+  "connections": {
+    "https://settingsservice.gaiamobile.org": {
+      "description": "Test SHIM IAC",
+      "rules": {}
+    }
+  },
+  "permissions": {
+    "settings":{ "access": "readwrite" }
+  },
+  "installs_allowed_from": [
+    "*"
+  ]
+}
+
