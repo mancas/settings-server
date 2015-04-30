@@ -72,7 +72,7 @@ debug(JSON.stringify(evt.data));
         }
       });
     }
-debug(request.operation == 'createLock');
+debug(request.operation);
     if (request.operation === 'createLock') {
       debug('CREATING LOCK');
       _locks[request.id] = _settings.createLock();
