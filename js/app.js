@@ -80,6 +80,7 @@ debug(JSON.stringify(evt.data));
     } else if (requestOp.operation === 'addObserver') {
       _observers[request.id] = observerTemplate;
       _settings.addObserver(requestOp.settingName, _observers[request.id]);
+      debug('OBSERVER ADDED - ' + _observers.length);
     } else if (requestOp.operation === 'removeObserver') {
       _settings.removeObserver(_observers[request.id]);
     } else if (requestOp.operation === 'onsettingchange') {
