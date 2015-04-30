@@ -58,7 +58,7 @@
     var remotePortId = evt.data.remotePortId;
     var request = evt.data.remoteData;
     var requestOp = request.data;
-
+debug(JSON.stringify(evt.data));
     function observerTemplate(evt) {
       channel.postMessage({
         remotePortId: remotePortId,
