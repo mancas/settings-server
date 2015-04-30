@@ -3,12 +3,12 @@
   "name": "Settings - SW - SHIM - SERVER",
   "description": "Service worker - shim testing",
   "type": "certified",
-  "launch_path": "/settings-sw/index.html",
+  "launch_path": "/settings-server/index.html",
   "icons": {
-    "16": "/settings-sw/style/icons/icon.png",
-    "48": "/settings-sw/style/icons/icon.png",
-    "60": "/settings-sw/style/icons/icon.png",
-    "128": "/settings-sw/style/icons/icon.png"
+    "16": "/settings-server/style/icons/icon.png",
+    "48": "/settings-server/style/icons/icon.png",
+    "60": "/settings-server/style/icons/icon.png",
+    "128": "/settings-server/style/icons/icon.png"
   },
   "connections": {
     "https://settingsservice.gaiamobile.org": {
