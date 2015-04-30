@@ -72,9 +72,8 @@ debug(JSON.stringify(evt.data));
         }
       });
     }
-debug(request.operation);
-    if (request.operation === 'createLock') {
-      debug('CREATING LOCK');
+
+    if (requestOp.operation === 'createLock') {
       _locks[request.id] = _settings.createLock();
       // Let's assume this works always..
       channel.postMessage({remotePortId: remotePortId, data: {id: request.id}});
