@@ -80,20 +80,21 @@ debug(JSON.stringify(evt.data));
     } else if (requestOp.operation === 'addObserver') {
       _observers[request.id] = observerTemplate;
       _settings.addObserver(requestOp.settingName, _observers[request.id]);
-      debug('OBSERVER ADDED - ' + _observers[request.id]);
     } else if (requestOp.operation === 'removeObserver') {
       _settings.removeObserver(_observers[request.id]);
     } else if (requestOp.operation === 'onsettingchange') {
       _settings.onsettingchange = observerTemplate;
     } else {
       // It's either a get or a set... or an error but let's assume it isn't :P
-      _locks[requestOp.lockId][requestOp.operation](requestOp.settings).
-        then(result => {
-          channel.postMessage({
-            remotePortId: remotePortId,
-            data: { id : request.id, result: result}}
-          );
-      });
+      var request =
+        _locks[requestOp.lockId][requestOp.operation](requestOp.settings);
+
+      request.onsuccess = () => {
+        channel.postMessage({
+          remotePortId: remotePortId,
+          data: { id : request.id, result: request.result[requestOp.settings]}}
+        );
+      };
     }
   };
 
