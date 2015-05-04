@@ -96,6 +96,13 @@ debug(JSON.stringify(evt.data));
           data: { id : request.id, result: request.result[requestOp.settings]}}
         );
       };
+
+      request.onerror = () => {
+        channel.postMessage({
+          remotePortId: remotePortId,
+          data: { id : request.id, result: false}}
+        );
+      };
     }
   };
 
