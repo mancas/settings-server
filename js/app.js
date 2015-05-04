@@ -89,18 +89,18 @@ debug(JSON.stringify(evt.data));
       if (_locks[requestOp.lockId].closed) {
         _locks[requestOp.lockId] = _settings.createLock();
       }
-      var request =
+      var settingRequest =
         _locks[requestOp.lockId][requestOp.operation](requestOp.settings);
 
-      request.onsuccess = () => {
-        debug('SUCCESS - ' + JSON.stringify(request.result) + ' ' + request.id + ' ' + requestOp.settings);
+      settingRequest.onsuccess = () => {
+        debug('SUCCESS - ' + JSON.stringify(settingRequest.result) + ' ' + request.id + ' ' + requestOp.settings);
         channel.postMessage({
           remotePortId: remotePortId,
-          data: { id : request.id, result: request.result[requestOp.settings]}}
+          data: { id : request.id, result: settingRequest.result[requestOp.settings]}}
         );
       };
 
-      request.onerror = () => {
+      settingRequest.onerror = () => {
         channel.postMessage({
           remotePortId: remotePortId,
           data: { id : request.id, result: false}}
