@@ -2,7 +2,7 @@
   'use strict';
 
   function debug(str) {
-    console.log("MANU - SettingsService -*-:" + str);
+    console.log('MANU - SettingsService -*-:' + str);
   }
 
   // This is a very basic sample app that uses a SW and acts as a server for
@@ -58,9 +58,8 @@
     var remotePortId = evt.data.remotePortId;
     var request = evt.data.remoteData;
     var requestOp = request.data;
-debug(JSON.stringify(evt.data));
+
     function observerTemplate(evt) {
-      debug('OBSERVER FIRED!');
       channel.postMessage({
         remotePortId: remotePortId,
         data: {
@@ -89,24 +88,14 @@ debug(JSON.stringify(evt.data));
       if (_locks[requestOp.lockId].closed) {
         _locks[requestOp.lockId] = _settings.createLock();
       }
-      var req =
-        _locks[requestOp.lockId][requestOp.operation](requestOp.settings);
-
-      req.onsuccess = () => {
-        debug('SUCCESS - ' + JSON.stringify(req) + ' ' + request.id + ' ' + requestOp.settings);
-        console.info(req);
-        channel.postMessage({
-          remotePortId: remotePortId,
-          data: { id : request.id, result: req.result[requestOp.settings]}}
-        );
-      };
-
-      req.onerror = () => {
-        channel.postMessage({
-          remotePortId: remotePortId,
-          data: { id : request.id, result: false}}
-        );
-      };
+      _locks[requestOp.lockId][requestOp.operation](requestOp.settings).
+        then(result => {
+          console.info(result);
+          channel.postMessage({
+            remotePortId: remotePortId,
+            data: { id : request.id, result: result}}
+          );
+        });
     }
   };
 
