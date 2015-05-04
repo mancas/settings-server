@@ -93,7 +93,7 @@ debug(JSON.stringify(evt.data));
         _locks[requestOp.lockId][requestOp.operation](requestOp.settings);
 
       request.onsuccess = () => {
-        debug('SUCCESS - ' + request.result[requestOp.settings]);
+        debug('SUCCESS - ' + JSON.stringify(request.result) + ' ' + request.id + ' ' + requestOp.settings);
         channel.postMessage({
           remotePortId: remotePortId,
           data: { id : request.id, result: request.result[requestOp.settings]}}
