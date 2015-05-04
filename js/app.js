@@ -86,7 +86,9 @@ debug(JSON.stringify(evt.data));
       _settings.onsettingchange = observerTemplate;
     } else {
       // It's either a get or a set... or an error but let's assume it isn't :P
-      debug(_locks[requestOp.lockId].closed);
+      if (_locks[requestOp.lockId].closed) {
+        _locks[requestOp.lockId] = _settings.createLock();
+      }
       var request =
         _locks[requestOp.lockId][requestOp.operation](requestOp.settings);
 
