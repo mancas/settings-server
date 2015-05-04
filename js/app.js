@@ -88,7 +88,7 @@ debug(JSON.stringify(evt.data));
       // It's either a get or a set... or an error but let's assume it isn't :P
       debug(typeof _locks[requestOp.lockId][requestOp.operation]);
       var method = _locks[requestOp.lockId][requestOp.operation];
-      console.info(_locks[requestOp.lockId]);
+      console.info(_locks[requestOp.lockId], requestOp.settings);
       var request = typeof method === 'function' && method(requestOp.settings);
 
       request.onsuccess = () => {
