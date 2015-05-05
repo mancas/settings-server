@@ -82,6 +82,7 @@
     } else if (requestOp.operation === 'removeObserver') {
       _settings.removeObserver(_observers[request.id]);
     } else if (requestOp.operation === 'onsettingchange') {
+      console.info('SETTING_CHANGE!');
       _settings.onsettingchange = observerTemplate;
     } else {
       // It's either a get or a set... or an error but let's assume it isn't :P
