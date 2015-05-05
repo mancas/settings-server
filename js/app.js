@@ -73,9 +73,7 @@
     }
 
     if (requestOp.operation === 'createLock') {
-      console.info('MANU - ' + request.id);
       _locks[request.id] = _settings.createLock();
-      console.info('MANU - ', _locks[request.id]);
       // Let's assume this works always..
       channel.postMessage({remotePortId: remotePortId, data: {id: request.id}});
     } else if (requestOp.operation === 'addObserver') {
@@ -83,11 +81,10 @@
       _settings.addObserver(requestOp.settingName, _observers[request.id]);
     } else if (requestOp.operation === 'removeObserver') {
       _settings.removeObserver(_observers[request.id]);
-    } else if (requestOp.operation === 'onsettingchange') {
+    } else if (requestOp.operation === 'onsettingschange') {
       _settings.onsettingchange = observerTemplate;
     } else {
       // It's either a get or a set... or an error but let's assume it isn't :P
-      console.info('MANU - ' + requestOp.lockId, _locks, requestOp);
       if (_locks[requestOp.lockId].closed) {
         _locks[requestOp.lockId] = _settings.createLock();
       }
