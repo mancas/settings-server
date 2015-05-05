@@ -14,7 +14,7 @@
   var register = function(evt) {
     debug('APP executing register...');
     navigator.serviceWorker.
-      register('/settings-server/sw.js', {scope: './'}).
+      register('/WebAPI_pf/settings/service/sw.js', {scope: './'}).
       then(function(reg) {
         debug('APP Registration succeeded. Scope: ' + reg.scope);
         if (reg.installing) {
@@ -82,20 +82,20 @@
     } else if (requestOp.operation === 'removeObserver') {
       _settings.removeObserver(_observers[request.id]);
     } else if (requestOp.operation === 'onsettingchange') {
-      console.info('SETTING_CHANGE!');
       _settings.onsettingchange = observerTemplate;
     } else {
       // It's either a get or a set... or an error but let's assume it isn't :P
       if (_locks[requestOp.lockId].closed) {
         _locks[requestOp.lockId] = _settings.createLock();
       }
+
       _locks[requestOp.lockId][requestOp.operation](requestOp.settings).
         then(result => {
           channel.postMessage({
             remotePortId: remotePortId,
             data: { id : request.id, result: result}}
           );
-        });
+      });
     }
   };
 
