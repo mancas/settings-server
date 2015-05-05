@@ -64,7 +64,7 @@
         remotePortId: remotePortId,
         data: {
           id: request.id,
-          data: {
+          result: {
             settingName: evt.settingName,
             settingValue: evt.settingValue
           }
@@ -90,7 +90,6 @@
       }
       _locks[requestOp.lockId][requestOp.operation](requestOp.settings).
         then(result => {
-          console.info(result);
           channel.postMessage({
             remotePortId: remotePortId,
             data: { id : request.id, result: result}}
