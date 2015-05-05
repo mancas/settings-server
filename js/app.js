@@ -73,8 +73,9 @@
     }
 
     if (requestOp.operation === 'createLock') {
-      console.info('MANU - ' request.id);
+      console.info('MANU - ' + request.id);
       _locks[request.id] = _settings.createLock();
+      console.info('MANU - ', _locks[request.id]);
       // Let's assume this works always..
       channel.postMessage({remotePortId: remotePortId, data: {id: request.id}});
     } else if (requestOp.operation === 'addObserver') {
