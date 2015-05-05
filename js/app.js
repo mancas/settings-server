@@ -87,7 +87,7 @@
       _settings.onsettingchange = observerTemplate;
     } else {
       // It's either a get or a set... or an error but let's assume it isn't :P
-      console.info('MANU - ' + requestOp.lockId, _locks);
+      console.info('MANU - ' + requestOp.lockId, _locks, requestOp);
       if (_locks[requestOp.lockId].closed) {
         _locks[requestOp.lockId] = _settings.createLock();
       }
