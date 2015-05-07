@@ -14,7 +14,7 @@
   var register = function(evt) {
     debug('APP executing register...');
     navigator.serviceWorker.
-      register('/settings-server/common/sw.js', {scope: './'}).
+      register('/settings-server/sw.js', {scope: './'}).
       then(function(reg) {
         debug('APP Registration succeeded. Scope: ' + reg.scope);
         if (reg.installing) {
