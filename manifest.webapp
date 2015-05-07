@@ -5,10 +5,10 @@
   "type": "certified",
   "launch_path": "/settings-server/index.html",
   "icons": {
-    "16": "/settings-server/style/icons/icon.png",
-    "48": "/settings-server/style/icons/icon.png",
-    "60": "/settings-server/style/icons/icon.png",
-    "128": "/settings-server/style/icons/icon.png"
+    "16": "/settings-server/common/style/icons/icon.png",
+    "48": "/settings-server/common/style/icons/icon.png",
+    "60": "/settings-server/common/style/icons/icon.png",
+    "128": "/settings-server/common/style/icons/icon.png"
   },
   "connections": {
     "https://settingsservice.gaiamobile.org": {

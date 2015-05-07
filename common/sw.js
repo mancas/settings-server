@@ -7,11 +7,11 @@
 // ADDED FOR POLYFILL
 
 function debug(str) {
-  console.log('MANU - Setting Service SW -*- -->' + str);
+  console.log('Setting Service SW -*- -->' + str);
 }
 
 // ADDED FOR POLYFILL: Import the polyfill script
-this.importScripts('/settings-server/polyfill/navigator_connect_sw.js');
+this.importScripts('/settings-server/common/polyfill/navigator_connect_sw.js');
 // END ADDED FOR POLYFILL
 
 this.addEventListener('install', function(evt) {
