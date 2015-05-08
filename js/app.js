@@ -2,7 +2,7 @@
   'use strict';
 
   function debug(str) {
-    console.log('SettingsService -*-:' + str);
+    console.log('MANU SettingsService -*-:' + str);
   }
 
   // Ok, this kinda sucks because most APIs (and settings is one of them) cannot
