@@ -1,9 +1,9 @@
 {
   "version": "0.1.0",
-  "name": "Settings - SW - SHIM - SERVER",
-  "description": "Service worker - shim testing",
-  "type": "certified",
+  "name": "SettingsService",
+  "description": "Settings Service",
   "role": "system",
+  "type": "certified",
   "launch_path": "/settings-server/index.html",
   "icons": {
     "16": "/settings-server/common/style/icons/icon.png",
@@ -13,7 +13,7 @@
   },
   "connections": {
     "https://settingsservice.gaiamobile.org": {
-      "description": "Test SHIM IAC",
+      "description": "Test SHIM IAC - Settings",
       "rules": {}
     }
   },

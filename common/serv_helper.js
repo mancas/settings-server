@@ -13,6 +13,7 @@
 
   var register = function(evt) {
     debug('APP executing register...');
+    var origin = document.location.origin;
     navigator.serviceWorker.
       register('/settings-server/sw.js', {scope: './'}).
       then(function(reg) {
