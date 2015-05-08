@@ -38,7 +38,7 @@
         }
       });
     }
-debug(JSON:stringify(requestOp));
+debug(JSON.stringify(requestOp));
     if (requestOp.operation === 'createLock') {
       _locks[request.id] = _settings.createLock();
       // Let's assume this works always..
