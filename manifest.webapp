@@ -2,7 +2,6 @@
   "version": "0.1.0",
   "name": "SettingsService",
   "description": "Settings Service",
-  "role": "system",
   "type": "certified",
   "launch_path": "/settings-server/index.html",
   "icons": {
