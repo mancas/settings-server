@@ -2,7 +2,7 @@
   'use strict';
 
   function debug(str) {
-    console.log('-*-*- ServHelper: ' + str);
+    console.log('MANU -*-*- ServHelper: ' + str);
   }
 
   // This is a very basic sample app that uses a SW and acts as a server for
