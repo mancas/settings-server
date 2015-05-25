@@ -31,14 +31,14 @@
         remotePortId: remotePortId,
         data: {
           id: request.id,
-          data: {
+          event: {
             settingName: evt.settingName,
             settingValue: evt.settingValue
           }
         }
       });
     }
-debug(JSON.stringify(requestOp));
+
     if (requestOp.operation === 'createLock') {
       _locks[request.id] = _settings.createLock();
       // Let's assume this works always..
@@ -47,7 +47,7 @@ debug(JSON.stringify(requestOp));
       _observers[request.id] = observerTemplate;
       _settings.addObserver(requestOp.settingName, _observers[request.id]);
     } else if (requestOp.operation === 'removeObserver') {
-      _settings.removeObserver(_observers[request.id]);
+      _settings.removeObserver(_observers[requestOp.observerId]);
     } else if (requestOp.operation === 'onsettingschange') {
       _settings.onsettingchange = observerTemplate;
     } else {
