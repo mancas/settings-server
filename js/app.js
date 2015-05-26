@@ -47,7 +47,8 @@
       _observers[request.id] = observerTemplate;
       _settings.addObserver(requestOp.settingName, _observers[request.id]);
     } else if (requestOp.operation === 'removeObserver') {
-      _settings.removeObserver(_observers[requestOp.observerId]);
+      _settings.removeObserver(requestOp.settingName,
+        _observers[requestOp.observerId]);
     } else if (requestOp.operation === 'onsettingschange') {
       _settings.onsettingchange = observerTemplate;
     } else {
