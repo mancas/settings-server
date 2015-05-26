@@ -57,7 +57,7 @@
       }
 
       _locks[requestOp.lockId][requestOp.operation].
-        apply(_locks[requestOp.lockId], ...requestOp.settings).
+        apply(_locks[requestOp.lockId], ...requestOp.params).
         then(result => {
           channel.postMessage({
             remotePortId: remotePortId,
