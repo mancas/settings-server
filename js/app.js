@@ -77,7 +77,7 @@
         _observers[requestOp.observerId]);
     },
 
-    onsettingchange: setHanlder.bind(undefined, 'onsettingchange'),
+    onsettingschange: setHanlder.bind(undefined, 'onsettingschange'),
 
     get: buildDOMRequestAnswer.bind(this, 'get'),
 
