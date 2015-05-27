@@ -77,7 +77,7 @@
         _observers[requestOp.observerId]);
     },
 
-    onsettingchange: setHanlder.bind(undefined, 'onsettingchange');
+    onsettingchange: setHanlder.bind(undefined, 'onsettingchange')
   };
 
   var processSWRequest = function(channel, evt) {
