@@ -77,7 +77,11 @@
         _observers[requestOp.observerId]);
     },
 
-    onsettingchange: setHanlder.bind(undefined, 'onsettingchange')
+    onsettingchange: setHanlder.bind(undefined, 'onsettingchange'),
+
+    get: buildDOMRequestAnswer.bind(this, 'get'),
+
+    set: buildDOMRequestAnswer.bind(this, 'set')
   };
 
   var processSWRequest = function(channel, evt) {
