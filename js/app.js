@@ -11,26 +11,38 @@
   // be sent to the client. Yay us!
   var _locks = {};
   var _observers = {};
+  var _settings = navigator.mozSettings;
 
-  var processSWRequest = function(channel, evt) {
+  function buildDOMRequestAnswer(operation, channel, request) {
+    debug('Building call --> ' + JSON.stringify(request));
+    var remotePortId = request.remotePortId;
+    var reqId = request.remoteData.id;
+    var opData = request.remoteData.data.params || [];
+    var requestOp = request.remoteData.data;
 
-    var _settings = navigator.mozSettings;
-    // We can get:
-    // * createLock
-    // * addObserver
-    // * removeObserver
-    // * lock.set || lock.get
-    // All the operations have a requestId, and the lock operations also include
-    // a lock id.
-    var remotePortId = evt.data.remotePortId;
-    var request = evt.data.remoteData;
-    var requestOp = request.data;
+    // It's either a get or a set... or an error but let's assume it isn't :P
+    if (_locks[requestOp.lockId].closed) {
+      _locks[requestOp.lockId] = _settings.createLock();
+    }
+
+    _locks[requestOp.lockId][operation].(...opData).then(result => {
+      channel.postMessage({
+        remotePortId: remotePortId,
+        data: { id : reqId, result: result}}
+      );
+    });
+  }
+
+  function setHanlder(operation, channel, request) {
+    var remotePortId = request.remotePortId;
+    var reqId = request.remoteData.id;
+    var requestOp = request.remoteData.data;
 
     function observerTemplate(evt) {
       channel.postMessage({
         remotePortId: remotePortId,
         data: {
-          id: request.id,
+          id: reqId,
           event: {
             settingName: evt.settingName,
             settingValue: evt.settingValue
@@ -39,32 +51,53 @@
       });
     }
 
-    if (requestOp.operation === 'createLock') {
-      _locks[request.id] = _settings.createLock();
+    if (operation === 'addObserver') {
+      _observers[reqId] = observerTemplate;
+      _settings.addObserver(requestOp.settingName, _observers[reqId]);
+    } else {
+      _settings.onsettingchange = observerTemplate;
+    }
+  }
+
+  var _operations = {
+    createLock: function(channel, request) {
+      var remotePortId = request.remotePortId;
+      var reqId = request.remoteData.id;
+      _locks[reqId] = _settings.createLock();
       // Let's assume this works always..
-      channel.postMessage({remotePortId: remotePortId, data: {id: request.id}});
-    } else if (requestOp.operation === 'addObserver') {
-      _observers[request.id] = observerTemplate;
-      _settings.addObserver(requestOp.settingName, _observers[request.id]);
-    } else if (requestOp.operation === 'removeObserver') {
+      channel.postMessage({remotePortId: remotePortId, data: {id: reqId}});
+    },
+
+    addObserver: setHanlder.bind(undefined, 'addObserver'),
+
+    removeObserver: function(channel, request) {
+      var reqId = request.remoteData.id;
+      var requestOp = request.remoteData.data;
       _settings.removeObserver(requestOp.settingName,
         _observers[requestOp.observerId]);
-    } else if (requestOp.operation === 'onsettingschange') {
-      _settings.onsettingchange = observerTemplate;
-    } else {
-      // It's either a get or a set... or an error but let's assume it isn't :P
-      if (_locks[requestOp.lockId].closed) {
-        _locks[requestOp.lockId] = _settings.createLock();
-      }
+    },
 
-      _locks[requestOp.lockId][requestOp.operation].
-        apply(_locks[requestOp.lockId], requestOp.params).
-        then(result => {
-          channel.postMessage({
-            remotePortId: remotePortId,
-            data: { id : request.id, result: result}}
-          );
-      });
+    onsettingchange: setHanlder.bind(undefined, 'onsettingchange');
+  };
+
+  var processSWRequest = function(channel, evt) {
+    // We can get:
+    // * createLock
+    // * addObserver
+    // * removeObserver
+    // * lock.set || lock.get
+    // All the operations have a requestId, and the lock operations also include
+    // a lock id.
+    var request = evt.data.remoteData;
+    var requestOp = request.data.operation;
+
+    debug('processSWRequest --> processing a msg:' +
+          (evt.data ? JSON.stringify(evt.data): 'msg without data'));
+    if (requestOp in _operations) {
+      _operations[requestOp] &&
+        _operations[requestOp](channel, evt.data);
+    } else {
+      console.error('Settings service unknown operation:' + requestOp);
     }
   };
 
