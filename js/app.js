@@ -25,7 +25,7 @@
       _locks[requestOp.lockId] = _settings.createLock();
     }
 
-    _locks[requestOp.lockId][operation].(...opData).then(result => {
+    _locks[requestOp.lockId][operation](...opData).then(result => {
       channel.postMessage({
         remotePortId: remotePortId,
         data: { id : reqId, result: result}}
